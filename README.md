@@ -39,42 +39,7 @@ Each entry in this table represents one material you want to reserve.
 | `REQ_DATE`   | DATS     | Required Date              | When the reservation is needed. Optional.                      |
 | `MOVEMENT`   | CHAR(1)  | Movement Execution Flag    | Set this to `'X'` to allow processing.                         |
 
-🧪 Simple Code Example:
 
-DATA: lv_header TYPE bapi1111_res_header,
-      lt_items  TYPE TABLE OF bapi1111_res_item,
-      wa_item   TYPE bapi1111_res_item.
-
-lv_header-plant      = '1020'.
-lv_header-res_date   = sy-datum.
-lv_header-cost_ctr   = 'MCCHORF001'.
-lv_header-move_type  = '201'.
-lv_header-part_acct  = 'OR'.
-lv_header-gr_rcpt    = 'USER001'.
-lv_header-created_by = sy-uname.
-
-wa_item-material     = 'MAT1234'.
-wa_item-plant        = '1020'.
-wa_item-store_loc    = '0001'.
-wa_item-quantity     = '5'.
-wa_item-unit         = 'EA'.
-wa_item-short_text   = 'Spare Parts'.
-wa_item-movement     = 'X'.
-APPEND wa_item TO lt_items.
-
-CALL FUNCTION 'BAPI_RESERVATION_CREATE'
-  EXPORTING
-    reservation_header = lv_header
-  IMPORTING
-    reservation        = DATA(lv_reservation_no)
-  TABLES
-    reservation_items  = lt_items
-    return             = DATA(lt_return).
-
-🛠 After the BAPI: Commit the Reservation
-
-CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
-  EXPORTING
     wait = 'X'.
 
 Without this step, the reservation won’t be saved in the system!
