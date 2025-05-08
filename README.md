@@ -40,9 +40,6 @@ Each entry in this table represents one material you want to reserve.
 | `MOVEMENT`   | CHAR(1)  | Movement Execution Flag    | Set this to `'X'` to allow processing.                         |
 
 
-    wait = 'X'.
-
-Without this step, the reservation won’t be saved in the system!
 
     
 
